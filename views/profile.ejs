@@ -3,17 +3,41 @@
   <head>
     <meta charset="utf-8">
     <title>MoneyMan MoneyMan Yeah Thats Me</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
   </head>
   <body>
     <h1>Money Man</h1>
     <h2>Track Your Bills With Ease</h2>
-    <h3>Fill out the input fields appropriately to have it calculate the monthly grand total.</h3>
-    <form action="/billMatrix">
+    <h3>Fill out the input fields appropriately to track your bills.</h3>
+    <form action="/bills" method="post">
       <input type="text" name="billDate" value="" placeholder="MM-DD-YYYY">
-      <input type="text" name="" value="" placeholder="Bill Name">
-      <input type="text" name="" value="" placeholder="$000">.
-      <input type="text" name="" value="" placeholder=" ¢00">
+      <input type="text" name="billName" value="" placeholder="Bill Name">
+      <input type="text" name="billAmount" value="" placeholder="$000">.
       <button type="submit">Submit</button>
     </form>
+<!-- where date from db is rendered back in the dom. -->
+    <div class="col-sm-6">
+      <h3>Bills</h3>
+      <ul class="bills">
+      <% for(var i=0; i<test.length; i++) {%>
+        <li class="bills">
+          <span><%= test[i].billDate %></span>
+          <span><%= test[i].billName %></span>
+          <span><%= test[i].billAmount %></span>
+          <span><i class="fas fa-dumpster-fire" aria-hidden="true"></i></span>
+        </li>
+      <% } %>
+      </ul>
+
+
+
+
+
+
+
+
+
+<script src="main.js"></script>
+
   </body>
 </html>

@@ -9,11 +9,11 @@ module.exports = function(app, passport, db) {
 
     // PROFILE SECTION =========================
     app.get('/profile', isLoggedIn, function(req, res) {
-        db.collection('test').find().sort({thumbUp: - 1}).toArray((err, result) => {
+        db.collection('test').find().sort({billAmount: - 1}).toArray((err, result) => {
           if (err) return console.log(err)
           res.render('profile.ejs', {
             user : req.user,
-            messages: result
+            test: result
           })
         })
     });
@@ -26,46 +26,18 @@ module.exports = function(app, passport, db) {
 
 // message board routes ===============================================================
 
-    app.post('/messages', (req, res) => {
-      db.collection('test').save({name: req.body.name, msg: req.body.msg, thumbUp: 0, thumbDown:0}, (err, result) => {
+    app.post('/bills', (req, res) => {
+      db.collection('test').save({billDate: req.body.billDate, billName: req.body.billName, billAmount: req.body.billAmount}, (err, result) => {
         if (err) return console.log(err)
         console.log('saved to database')
         res.redirect('/profile')
       })
     })
 
-    app.put('/messages', (req, res) => {
-      db.collection('test')
-      .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-        $set: {
-          thumbUp:req.body.thumbUp + 1
-        }
-      }, {
-        sort: {_id: -1},
-        upsert: true
-      }, (err, result) => {
-        if (err) return res.send(err)
-        res.send(result)
-      })
-    })
-    app.put('/thumbDown', (req, res) => {
-    db.collection('test')
-    .findOneAndUpdate({name: req.body.name, msg: req.body.msg}, {
-      $set: {
-        thumbUp:req.body.thumbUp - 1
-      }
-    }, {
-      sort: {_id: -1},
-      upsert: true
-    }, (err, result) => {
-      if (err) return res.send(err)
-      res.send(result)
-    })
-    })
 
 
-    app.delete('/messages', (req, res) => {
-      db.collection('test').findOneAndDelete({name: req.body.name, msg: req.body.msg}, (err, result) => {
+    app.delete('/bills', (req, res) => {
+      db.collection('test').findOneAndDelete({billDate: req.body.billDate, billName: req.body.billName, billAmount: req.body.billAmount}, (err, result) => {
         if (err) return res.send(500, err)
         res.send('Message deleted!')
       })
